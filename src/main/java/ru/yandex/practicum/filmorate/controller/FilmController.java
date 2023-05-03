@@ -16,22 +16,13 @@ public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
     public Film validation (Film film){
         LocalDate isValidation = LocalDate.of(1895, 12, 28);
-        if(film.getName() == null || film.getName().isBlank()){
-            throw new ValidationFilmException("Название фильма не может быть пустым");
-        }
-        if(film.getDescription().length()>200){
-            throw new ValidationFilmException("Максимальная длина описания — 200 символов");
-        }
         if(film.getReleaseDate() == null || film.getReleaseDate().isBefore(isValidation)){
             throw new ValidationFilmException("Дата релиза — не раньше 28 декабря 1895 года");
-        }
-        if(film.getDuration()<0) {
-            throw new ValidationFilmException("Продолжительность фильма должна быть положительной.");
         }
         return film;
     }
     @GetMapping
-    public Collection<Film> findAll() {
+    public Collection<Film> getAll() {
         return films.values();
     }
 
