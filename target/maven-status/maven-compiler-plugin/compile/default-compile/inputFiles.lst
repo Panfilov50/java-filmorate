@@ -1,0 +1,17 @@
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\FilmorateApplication.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\exception\ValidationFilmException.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\model\ErrorResponse.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\controller\FilmController.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\model\User.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\service\UserService.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\storage\InMemoryUserStorage.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\model\Film.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\storage\UserStorage.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\exception\UserAlreadyExistException.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\storage\InMemoryFilmStorage.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\exception\NotFoundFilmException.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\service\FilmService.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\storage\FilmStorage.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\controller\UserController.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\exception\NotFoundUserException.java
+C:\Users\68034\OneDrive\Рабочий стол\JAVA\java-filmorate-main\src\main\java\ru\yandex\practicum\filmorate\controller\ErrorHandler.java

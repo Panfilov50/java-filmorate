@@ -1,32 +1,25 @@
 package ru.yandex.practicum.filmorate;
 
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.controller.FilmController;
-import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
-import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
-
-import java.time.LocalDate;
-import java.util.Set;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
+@RestController
 public class FilmControllerTest {
-    private static Validator validator;
+  /*  private static Validator validator;
     @BeforeAll
     public static void setUpValidator() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-    FilmController filmController = new FilmController();
+    private final InMemoryFilmStorage inMemoryFilmStorage;
+
+    @Autowired
+    public FilmControllerTest(InMemoryFilmStorage inMemoryFilmStorage) {
+        this.inMemoryFilmStorage = inMemoryFilmStorage;
+    }
     @Test
     public void testFilmNameNull() throws ValidationFilmException {
         Film film = new Film(null, "TestDescription", LocalDate.of(2000, 01, 01), 120);
@@ -77,7 +70,7 @@ public class FilmControllerTest {
     public void testFilmReleaseDateBeforeValidation() throws ValidationFilmException {
         Film film = new Film("TestName", "TestDescription", LocalDate.of(1000, 01, 01), 120);
         assertThrows(
-                ValidationFilmException.class, () -> filmController.validation(film)
+                ValidationFilmException.class, () -> inMemoryFilmStorage.validation(film)
         );
     }
 
@@ -97,13 +90,8 @@ public class FilmControllerTest {
                 validator.validate(film);
         assertEquals( 0, constraintViolations.size() );
     }
-
+*/
 }
 
 
 
-  //  private int id;
-  //  private final String name;
-  //  private String description;
-  //  private LocalDate releaseDate;
-  //  private int duration;

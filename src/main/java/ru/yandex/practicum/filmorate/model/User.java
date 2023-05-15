@@ -1,11 +1,14 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
+import java.util.TreeSet;
+
 import lombok.*;
 import jakarta.validation.constraints.*;
 @Data
 public class User {
     private int id;
+    private TreeSet<Integer> friends;
     @NotNull
     @Email
     private final String email;
