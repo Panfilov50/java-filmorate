@@ -1,29 +1,27 @@
 package ru.yandex.practicum.filmorate.storage;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.exception.NotFoundFilmException;
 import ru.yandex.practicum.filmorate.exception.UserAlreadyExistException;
 import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestController
+@RequiredArgsConstructor
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
 
     private final UserStorage userStorage;
-    @Autowired
-    public InMemoryFilmStorage(UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
+    private int id = 1;
+    private final Map<Integer, Film> films = new HashMap<>();
 
-    int id = 1;
-    public final Map<Integer, Film> films = new HashMap<>();
     @Override
     public Film validation(Film film) {
         LocalDate isValidation = LocalDate.of(1895, 12, 28);
@@ -32,10 +30,12 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
         return film;
     }
+
     @Override
     public void nextId() {
         id++;
     }
+
     @Override
     public Film addFilm(Film film) {
         validation(film);
@@ -69,6 +69,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
 
     }
+
     @Override
     public Film addLikeFilms(int filmId, int userId) {
         if (!films.containsKey(filmId)) {
@@ -79,8 +80,9 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.put(films.get(filmId).getFilmId(), films.get(filmId));
         return films.get(filmId);
     }
+
     @Override
-    public Film deleteLike (int filmId, int userId){
+    public Film deleteLike(int filmId, int userId) {
         if (films.isEmpty() || !films.containsKey(filmId)) {
             throw new ValidationFilmException("Фильма с таким ID с таким нет.");
         } else if (!userStorage.getUsers().contains(userStorage.findUserById(userId))) {
@@ -116,7 +118,4 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
         return comp2 - comp1;
     }
-
-
 }
-

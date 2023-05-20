@@ -15,23 +15,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class InMemoryUserStorage implements UserStorage {
 
-    int id = 1;
+    private int id = 1;
     public final Map<Integer, User> users = new HashMap<>();
+
     @Override
     public void nextId() {
         id++;
     }
+
     @Override
     public List<User> getUsers() {
         return new ArrayList<>(users.values());
     }
+
     @Override
-    public User createUser (User user){
+    public User createUser(User user) {
         user.setId(id);
         nextId();
         users.put(user.getId(), user);
         return user;
     }
+
     @Override
     public User updateUser(User user) {
         if (users.containsKey(user.getId())) {
@@ -41,6 +45,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
         return user;
     }
+
     @Override
     public void deleteUserById(int id) {
         if (!users.containsKey(id)) {
@@ -49,6 +54,7 @@ public class InMemoryUserStorage implements UserStorage {
             users.remove(id);
         }
     }
+
     @Override
     public User findUserById(int id) {
         if (!users.containsKey(id)) {
@@ -72,6 +78,7 @@ public class InMemoryUserStorage implements UserStorage {
         log.info("Пользователь с id: {} добавил в друзья пользователя с id: {}", userId, friendId);
         return users.get(userId);
     }
+
     @Override
     public User removeFriend(int userId, int friendId) {
         if (!users.containsKey(userId)) {
@@ -115,6 +122,4 @@ public class InMemoryUserStorage implements UserStorage {
                 .map(users::get)
                 .collect(Collectors.toList());
     }
-
-
 }
