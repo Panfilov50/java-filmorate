@@ -11,10 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FilmService {
     private final FilmStorage filmStorage;
-
-    public Film validation(Film film) {
-        return filmStorage.validation(film);
-    }
     public List<Film> getFilms() {
         return filmStorage.getFilms();
     }
