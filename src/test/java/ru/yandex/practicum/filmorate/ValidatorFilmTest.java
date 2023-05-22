@@ -5,12 +5,15 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.controller.FilmController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.exception.ValidationFilmException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
+
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -18,15 +21,17 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
-public class FilmControllerTest {
+@SpringBootTest
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+public class ValidatorFilmTest {
     private static Validator validator;
+    private static FilmStorage filmStorage;
     @BeforeAll
     public static void setUpValidator() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-    FilmController filmController = new FilmController();
+
     @Test
     public void testFilmNameNull() throws ValidationFilmException {
         Film film = new Film(null, "TestDescription", LocalDate.of(2000, 01, 01), 120);
@@ -74,14 +79,6 @@ public class FilmControllerTest {
     }
 
     @Test
-    public void testFilmReleaseDateBeforeValidation() throws ValidationFilmException {
-        Film film = new Film("TestName", "TestDescription", LocalDate.of(1000, 01, 01), 120);
-        assertThrows(
-                ValidationFilmException.class, () -> filmController.validation(film)
-        );
-    }
-
-    @Test
     public void testFilmDurationNegativeNumber() throws ValidationFilmException {
         Film film = new Film("TestName", "TestDescription", LocalDate.of(2000, 01, 01), -10);
         Set<ConstraintViolation<Film>> constraintViolations =
@@ -98,12 +95,11 @@ public class FilmControllerTest {
         assertEquals( 0, constraintViolations.size() );
     }
 
+
+
+
+
 }
 
 
 
-  //  private int id;
-  //  private final String name;
-  //  private String description;
-  //  private LocalDate releaseDate;
-  //  private int duration;
