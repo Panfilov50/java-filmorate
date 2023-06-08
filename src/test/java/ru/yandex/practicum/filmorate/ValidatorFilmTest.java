@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 @SpringBootTest
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -34,7 +34,7 @@ public class ValidatorFilmTest {
 
     @Test
     public void testFilmNameNull() throws ValidationFilmException {
-        Film film = new Film(null, "TestDescription", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1,null, "TestDescription", LocalDate.of(2000, 01, 01), 120, 1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
           assertEquals( 1, constraintViolations.size() );
@@ -42,7 +42,7 @@ public class ValidatorFilmTest {
     }
     @Test
     public void testFilmNameEmpty() throws ValidationFilmException {
-        Film film = new Film(" ", "TestDescription", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1," ", "TestDescription", LocalDate.of(2000, 01, 01), 120, 1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 1, constraintViolations.size() );
@@ -51,7 +51,7 @@ public class ValidatorFilmTest {
 
     @Test
     public void testFilmDurationLength201() throws ValidationFilmException {
-        Film film = new Film("TestName", "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1,"TestName", "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120,1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 1, constraintViolations.size() );
@@ -60,27 +60,27 @@ public class ValidatorFilmTest {
 
     @Test
     public void testFilmDurationLength200() throws ValidationFilmException {
-        Film film = new Film("TestName", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1,"TestName", "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120,1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 0, constraintViolations.size() );
     }
     @Test
     public void testFilmDurationLength199() throws ValidationFilmException {
-        Film film = new Film("TestName", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1,"TestName", "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", LocalDate.of(2000, 01, 01), 120,1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 0, constraintViolations.size() );
     }
     @Test
     public void testFilmReleaseDateAfterValidation() throws ValidationFilmException {
-        Film film = new Film("TestName", "TestDescription", LocalDate.of(2000, 01, 01), 120);
+        Film film = new Film(1,"TestName", "TestDescription", LocalDate.of(2000, 01, 01), 120,1,null,0);
         assertEquals(film.getReleaseDate(),LocalDate.of(2000, 01, 01));
     }
 
     @Test
     public void testFilmDurationNegativeNumber() throws ValidationFilmException {
-        Film film = new Film("TestName", "TestDescription", LocalDate.of(2000, 01, 01), -10);
+        Film film = new Film(1,"TestName", "TestDescription", LocalDate.of(2000, 01, 01), -10,1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 1, constraintViolations.size() );
@@ -89,16 +89,11 @@ public class ValidatorFilmTest {
 
     @Test
     public void testFilmDurationPositiveNumber() throws ValidationFilmException {
-        Film film = new Film("TestName", "TestDescription", LocalDate.of(2000, 01, 01), 1);
+        Film film = new Film(1,"TestName", "TestDescription", LocalDate.of(2000, 01, 01), 1,1,null,0);
         Set<ConstraintViolation<Film>> constraintViolations =
                 validator.validate(film);
         assertEquals( 0, constraintViolations.size() );
     }
-
-
-
-
-
 }
 
 

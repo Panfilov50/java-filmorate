@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/films")
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class FilmController {
     }
 
     @GetMapping("/{filmId}")
-    public Film getFilm(@PathVariable("filmId") int filmId) {
+    public Optional<Film> getFilm(@PathVariable("filmId") int filmId) {
         log.debug("Получение фильма по id {}.", filmId);
         return filmService.findFilmById(filmId);
     }

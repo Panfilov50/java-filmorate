@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class UserService {
         return userStorage.getUsers();
     }
 
-    public User createUser(User user) {
+    public Optional<User> createUser(User user) {
         return userStorage.createUser(user);
     }
 
@@ -28,15 +29,15 @@ public class UserService {
         userStorage.deleteUserById(id);
     }
 
-    public User findUserById(int id) {
+    public Optional<User> findUserById(int id) {
         return userStorage.findUserById(id);
     }
 
-    public User addFriend(int userId, int friendId) {
+    public Optional<User> addFriend(int userId, int friendId) {
         return userStorage.addFriend(userId, friendId);
     }
 
-    public User removeFriend(int userId, int friendId) {
+    public Optional<User> removeFriend(int userId, int friendId) {
         return userStorage.removeFriend(userId, friendId);
     }
 

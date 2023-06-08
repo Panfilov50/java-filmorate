@@ -2,11 +2,13 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestMapping("/users")
@@ -16,6 +18,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    JdbcOperations jdbcTemplate;
 
     @GetMapping
     public List<User> getUsers() {
@@ -24,13 +27,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
+    public Optional<User> getUserById(@PathVariable int id) {
         log.debug("Получили пользователя с id: {}", id);
         return userService.findUserById(id);
     }
 
     @PostMapping()
-    public User createUser(@RequestBody User user) {
+    public Optional<User> createUser(@RequestBody User user) {
         log.debug("Добавили: {}", user);
         return userService.createUser(user);
     }

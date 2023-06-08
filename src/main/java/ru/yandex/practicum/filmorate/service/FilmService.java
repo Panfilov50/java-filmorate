@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class FilmService {
         return filmStorage.updateFilm(film);
     }
 
-    public Film findFilmById(int filmId) {
+    public Optional<Film> findFilmById(int filmId) {
         return filmStorage.findFilmById(filmId);
     }
 
