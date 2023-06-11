@@ -21,11 +21,7 @@ public class UserService {
     private final UserStorage userStorage;
     private final FriendsStorage friendsStorage;
 
-    public User createUser(User user) {
-        return userStorage.createUser(user);
-    }
-
-    public User changeUser(int id, User user) {
+    public User valid (User user) {
         if ((user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@"))) {
             log.error("User email is empty or invalid {}", user.getName());
             throw new ValidationException("Имейл не может быть пустым или не содержать символ @");
@@ -42,7 +38,16 @@ public class UserService {
             log.error("User birthday is invalid. {}", user.getName());
             throw new ValidationException("Неверная дата рождения");
         }
-        log.info("User added {}", user);
+        return user;
+    }
+
+    public User createUser(User user) {
+        valid(user);
+        return userStorage.createUser(user);
+    }
+
+    public User changeUser(int id, User user) {
+        valid(user);
         return userStorage.changeUser(id, user);
     }
 
