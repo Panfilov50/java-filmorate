@@ -21,7 +21,7 @@ public class UserService {
     private final UserStorage userStorage;
     private final FriendsStorage friendsStorage;
 
-    public User valid (User user) {
+    public User valid(User user) {
         if ((user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@"))) {
             log.error("User email is empty or invalid {}", user.getName());
             throw new ValidationException("Имейл не может быть пустым или не содержать символ @");
