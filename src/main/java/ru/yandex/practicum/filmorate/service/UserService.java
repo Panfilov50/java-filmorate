@@ -116,25 +116,29 @@ public class UserService {
         var friendshipsByUser2 = friendsStorage.findAllFriends(otherUserId);
         List<Integer> friendIdByUser1 = new ArrayList<>();
         List<Integer> friendIdByUser2 = new ArrayList<>();
-        friendshipsByUser1.forEach(f -> {
-            if (f.getUserId() == userId) {
-                friendIdByUser1.add(f.getFriendId());
-            } else {
-                friendIdByUser1.add(f.getUserId());
-            }
-        });
-        friendshipsByUser2.forEach(f -> {
-            if (f.getUserId() == otherUserId) {
-                friendIdByUser2.add(f.getFriendId());
-            } else {
-                friendIdByUser2.add(f.getUserId());
-            }
-        });
+        for (var friendshipsByUser : friendshipsByUser1) {
+            int id;
+            if (friendshipsByUser.getUserId() == userId)
+                id = friendshipsByUser.getFriendId();
+            else
+                id = friendshipsByUser.getUserId();
+            friendIdByUser1.add(id);
+        }
+        for (var friendshipsByUser : friendshipsByUser2) {
+            int id;
+            if (friendshipsByUser.getUserId() == otherUserId)
+                id = friendshipsByUser.getFriendId();
+            else
+                id = friendshipsByUser.getUserId();
+            friendIdByUser2.add(id);
+        }
         friendIdByUser1.retainAll(friendIdByUser2);
         List<User> users = new ArrayList<>();
+
         for (var commonFriendId : friendIdByUser1) {
             users.add(userStorage.findUserById(commonFriendId));
         }
         return users;
     }
+
 }
