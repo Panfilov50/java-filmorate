@@ -95,7 +95,7 @@ public class UserService {
         var friends = friendsStorage.findAllFriends(userId);
         List<User> users = new ArrayList<>();
         friends.forEach(f -> {
-            if (f.getUserId() == userId){
+            if (f.getUserId() == userId) {
                 var user = userStorage.findUserById(f.getFriendId());
             } else {
                 var user = userStorage.findUserById(f.getUserId());
