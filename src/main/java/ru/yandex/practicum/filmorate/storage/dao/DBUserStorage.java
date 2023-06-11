@@ -1,7 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.dao;
 
-import ch.qos.logback.classic.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
