@@ -125,9 +125,9 @@ public class UserService {
         });
         friendshipsByUser2.forEach(f -> {
             if (f.getUserId() == userId) {
-                friendIdByUser1.add(f.getFriendId());
+                friendIdByUser2.add(f.getFriendId());
             } else {
-                friendIdByUser1.add(f.getUserId());
+                friendIdByUser2.add(f.getUserId());
             }
         });
         friendIdByUser1.retainAll(friendIdByUser2);
