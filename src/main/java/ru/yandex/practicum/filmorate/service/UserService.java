@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
@@ -111,14 +110,14 @@ public class UserService {
         List<Integer> friendIdByUser1 = new ArrayList<>();
         List<Integer> friendIdByUser2 = new ArrayList<>();
         friendshipsByUser1.forEach(f -> {
-            if (f.getUserId() == userId){
+            if (f.getUserId() == userId) {
                 friendIdByUser1.add(f.getFriendId());
             } else {
                 friendIdByUser1.add(f.getUserId());
             }
         });
         friendshipsByUser2.forEach(f -> {
-            if (f.getUserId() == userId){
+            if (f.getUserId() == userId) {
                 friendIdByUser1.add(f.getFriendId());
             } else {
                 friendIdByUser1.add(f.getUserId());
@@ -126,9 +125,9 @@ public class UserService {
         });
         friendIdByUser1.retainAll(friendIdByUser2);
         List<User> users = new ArrayList<>();
-        friendIdByUser1.forEach(f -> {
-            users.add(userStorage.findUserById(f);
-        });
+        for (var commonFriendId : friendIdByUser1) {
+            users.add(userStorage.findUserById(commonFriendId));
+        }
         return users;
     }
 }
