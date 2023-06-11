@@ -24,7 +24,7 @@ public class FilmTests {
     private final DBUserStorage userStorage;
     private final DBMpaStorage mpaStorage;
 
-    private void assertThatTest(Film filmTest){
+    private void assertThatTest(Film filmTest) {
         assertThat(filmTest).isNotNull();
         assertThat(filmTest.getId()).isNotZero();
         assertThat(filmTest.getName()).isEqualTo(filmTest.getName());
@@ -33,11 +33,13 @@ public class FilmTests {
         assertThat(filmTest.getDuration()).isEqualTo(filmTest.getDuration());
         assertThat(filmTest.getMpa()).isEqualTo(filmTest.getMpa());
     }
+
     private Film createFilm1() {
         Film film1 = new Film(1, "AAA", "AAA",
                 LocalDate.of(2000, 1, 1), 1, new Mpa(1, "G"));
         return film1;
     }
+
     private Film createFilm2() {
         Film film2 = new Film(2, "BBB", "BBB",
                 LocalDate.of(2000, 1, 2), 2, new Mpa(2, "PG"));
