@@ -102,8 +102,10 @@ public class UserService {
         friends.forEach(f -> {
             if (f.getUserId() == userId) {
                 var user = userStorage.findUserById(f.getFriendId());
+                users.add(user);
             } else {
                 var user = userStorage.findUserById(f.getUserId());
+                users.add(user);
             }
         });
         return users;
