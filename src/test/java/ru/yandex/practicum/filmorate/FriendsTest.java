@@ -19,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor__ = @Autowired)
 public class FriendsTest {
-    final DBUserStorage userStorage;
-    final DBFriendsStorage friendsStorage;
+    private final DBUserStorage userStorage;
+    private final DBFriendsStorage friendsStorage;
 
     @Test
     void testAddFriends() {

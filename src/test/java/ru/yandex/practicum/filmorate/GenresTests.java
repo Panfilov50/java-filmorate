@@ -16,10 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor__ = @Autowired)
-
 public class GenresTests {
 
-    final GenreStorage genreStorage;
+    private final GenreStorage genreStorage;
 
 
     @Test

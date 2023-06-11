@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor__ = @Autowired)
 public class UserTests {
-    final DBUserStorage userStorage;
+    private final DBUserStorage userStorage;
 
     @Test
     void testCreateUser() {

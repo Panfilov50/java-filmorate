@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.controllers;
 
 import ch.qos.logback.classic.Logger;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/mpa")
 @AllArgsConstructor
+@Slf4j
 public class MpaController {
-    private final Logger log = (Logger) LoggerFactory.getLogger(MpaController.class);
+
     private final FilmService filmService;
 
     @GetMapping

@@ -23,7 +23,6 @@ import java.util.Map;
 @Repository("DBUserStorage")
 @Primary
 public class DBUserStorage implements UserStorage {
-    private final Logger log = (Logger) LoggerFactory.getLogger(DBUserStorage.class);
     private final JdbcTemplate jdbcTemplate;
 
     public DBUserStorage(JdbcTemplate jdbcTemplate) {

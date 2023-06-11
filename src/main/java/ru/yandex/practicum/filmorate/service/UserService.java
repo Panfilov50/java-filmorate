@@ -1,32 +1,49 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exceptions.UserNotFoundException;
+import ru.yandex.practicum.filmorate.exceptions.ValidationException;
 import ru.yandex.practicum.filmorate.model.Friends;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.storage.FriendsStorage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class UserService {
     private final UserStorage userStorage;
     private final FriendsStorage friendsStorage;
-
-    @Autowired
-    public UserService(UserStorage userStorage, FriendsStorage friendsStorage) {
-        this.userStorage = userStorage;
-        this.friendsStorage = friendsStorage;
-    }
 
     public User createUser(User user) {
         return userStorage.createUser(user);
     }
 
     public User changeUser(int id, User user) {
+        if ((user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@"))) {
+            log.error("User email is empty or invalid {}", user.getName());
+            throw new ValidationException("Имейл не может быть пустым или не содержать символ @");
+        }
+        if (user.getLogin().isBlank() || user.getLogin().contains(" ")) {
+            log.error("User login is empty or invalid {}", user.getName());
+            throw new ValidationException("Название не может быть пустым или содержать пробелы");
+        }
+        if (user.getName() == null || user.getName().isEmpty() || user.getName().isBlank()) {
+            log.error("User name is empty {}", user.getName());
+            user.setName(user.getLogin());
+        }
+        if (user.getBirthday().equals(LocalDate.now()) || user.getBirthday().isAfter(LocalDate.now())) {
+            log.error("User birthday is invalid. {}", user.getName());
+            throw new ValidationException("Неверная дата рождения");
+        }
+        log.info("User added {}", user);
         return userStorage.changeUser(id, user);
     }
 
@@ -78,15 +95,13 @@ public class UserService {
     public List<User> findAllFriends(int userId) {
         var friends = friendsStorage.findAllFriends(userId);
         List<User> users = new ArrayList<>();
-        for (var friend : friends) {
-            int id;
-            if (friend.getUserId() == userId)
-                id = friend.getFriendId();
-            else
-                id = friend.getUserId();
-            var user = userStorage.findUserById(id);
-            users.add(user);
-        }
+        friends.forEach(f -> {
+            if (f.getUserId() == userId){
+                var user = userStorage.findUserById(f.getFriendId());
+            } else {
+                var user = userStorage.findUserById(f.getUserId());
+            }
+        });
         return users;
     }
 
@@ -95,28 +110,25 @@ public class UserService {
         var friendshipsByUser2 = friendsStorage.findAllFriends(otherUserId);
         List<Integer> friendIdByUser1 = new ArrayList<>();
         List<Integer> friendIdByUser2 = new ArrayList<>();
-        for (var friendshipsByUser : friendshipsByUser1) {
-            int id;
-            if (friendshipsByUser.getUserId() == userId)
-                id = friendshipsByUser.getFriendId();
-            else
-                id = friendshipsByUser.getUserId();
-            friendIdByUser1.add(id);
-        }
-        for (var friendshipsByUser : friendshipsByUser2) {
-            int id;
-            if (friendshipsByUser.getUserId() == otherUserId)
-                id = friendshipsByUser.getFriendId();
-            else
-                id = friendshipsByUser.getUserId();
-            friendIdByUser2.add(id);
-        }
+        friendshipsByUser1.forEach(f -> {
+            if (f.getUserId() == userId){
+                friendIdByUser1.add(f.getFriendId());
+            } else {
+                friendIdByUser1.add(f.getUserId());
+            }
+        });
+        friendshipsByUser2.forEach(f -> {
+            if (f.getUserId() == userId){
+                friendIdByUser1.add(f.getFriendId());
+            } else {
+                friendIdByUser1.add(f.getUserId());
+            }
+        });
         friendIdByUser1.retainAll(friendIdByUser2);
         List<User> users = new ArrayList<>();
-
-        for (var commonFriendId : friendIdByUser1) {
-            users.add(userStorage.findUserById(commonFriendId));
-        }
+        friendIdByUser1.forEach(f -> {
+            users.add(userStorage.findUserById(f);
+        });
         return users;
     }
 }

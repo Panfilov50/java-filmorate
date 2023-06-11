@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.controllers;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,57 +16,19 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/users")
     public User createUser(@NotNull @RequestBody @Valid User user) {
         log.info("Post request {}", user);
-        if ((user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@"))) {
-            log.error("User email is empty or invalid {}", user.getName());
-            throw new ValidationException("Имейл не может быть пустым или не содержать символ @");
-        }
-        if (user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-            log.error("User login is empty or invalid {}", user.getName());
-            throw new ValidationException("Название не может быть пустым или содержать пробелы");
-        }
-        if (user.getName() == null || user.getName().isEmpty() || user.getName().isBlank()) {
-            log.error("User name is empty {}", user.getName());
-            user.setName(user.getLogin());
-        }
-        if (user.getBirthday().equals(LocalDate.now()) || user.getBirthday().isAfter(LocalDate.now())) {
-            log.error("User birthday is invalid. {}", user.getName());
-            throw new ValidationException("Неверная дата рождения");
-        }
-        log.info("User added {}", user);
         return userService.createUser(user);
     }
 
     @PutMapping("/users")
     public User changeUser(@NotNull @RequestBody @Valid User user) {
         log.info("Put request {}", user);
-        if ((user.getEmail().isBlank() || user.getEmail().isEmpty() || !user.getEmail().contains("@"))) {
-            log.error("User email is empty or invalid {}", user.getName());
-            throw new ValidationException("Имейл не может быть пустым или не содержать символ @");
-        }
-        if (user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-            log.error("User login is empty or invalid {}", user.getName());
-            throw new ValidationException("Название не может быть пустым или содержать пробелы");
-        }
-        if (user.getName() == null || user.getName().isEmpty() || user.getName().isBlank()) {
-            log.error("User name is empty {}", user.getName());
-            user.setName(user.getLogin());
-        }
-        if (user.getBirthday().equals(LocalDate.now()) || user.getBirthday().isAfter(LocalDate.now())) {
-            log.error("User birthday is invalid. {}", user.getName());
-            throw new ValidationException("Неверная дата рождения");
-        }
-        log.info("User changed {}", user);
         return userService.changeUser(user.getId(), user);
     }
 
