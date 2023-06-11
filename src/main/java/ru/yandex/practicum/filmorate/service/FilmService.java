@@ -7,6 +7,8 @@ import ru.yandex.practicum.filmorate.exceptions.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.*;
 import ru.yandex.practicum.filmorate.storage.*;
 
+import javax.validation.ValidationException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +27,7 @@ public class FilmService {
     private final FilmGenreStorage filmGenreStorage;
 
     public Film createFilm(Film film) {
+        validate(film);
         filmStorage.createFilm(film);
         addGenreForFilm(film);
         return film;
@@ -32,6 +35,7 @@ public class FilmService {
 
     public Film changeFilm(Film film) {
         log.info("Запрос изменения фильма1");
+        validate(film);
         try {
             filmStorage.changeFilm(film);
         } catch (Exception e) {
@@ -139,6 +143,24 @@ public class FilmService {
                 .filter(l -> l.getFilmId() == film.getId())
                 .forEach(l -> likesByFilm.add(l.getUserId()));
         film.setLikes(likesByFilm);
+    }
 
+    public void validate(Film film) {
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+            log.error("Film releaseDate is invalid. {}", film.getName());
+            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");
+        }
+        if (film.getName() == null || film.getName().isEmpty() || film.getName().isBlank()) {
+            log.error("Film name is empty or invalid. {}", film.getId());
+            throw new ValidationException("Имя не может быть пустым");
+        }
+        if ((film.getDescription().length()) > 200) {
+            log.error("Film description is too long. {}", film.getName());
+            throw new ValidationException("Описание фильма больше 200 символов");
+        }
+        if (film.getDuration() <= 0) {
+            log.error("Film duration is negative. {}", film.getName());
+            throw new ValidationException("Продолжительность фильма должна быть положительной");
+        }
     }
 }
